@@ -5,17 +5,12 @@ import {
   ChevronRight, 
   Play, 
   Clock, 
-  Layout, 
   MessageSquare, 
   Maximize2, 
   Minimize2,
-  ExternalLink,
-  Target,
-  Zap,
   TrendingUp,
   Users,
-  ShieldCheck,
-  Settings
+  Zap
 } from 'lucide-react';
 import { PITCH_VERSIONS } from './constants';
 import { Slide } from './types';
@@ -64,13 +59,13 @@ export default function App() {
     }
   };
 
-  const getAccentClass = (color: Slide['accentColor']) => {
+  const getBorderAccentClass = (color: Slide['accentColor']) => {
     switch (color) {
-      case 'blue': return 'text-blue-500 border-blue-500';
-      case 'emerald': return 'text-emerald-500 border-emerald-500';
-      case 'red': return 'text-red-500 border-red-500';
-      case 'orange': return 'text-orange-500 border-orange-500';
-      default: return 'text-blue-500 border-blue-500';
+      case 'blue': return 'border-blue-500';
+      case 'emerald': return 'border-emerald-500';
+      case 'red': return 'border-red-500';
+      case 'orange': return 'border-orange-500';
+      default: return 'border-blue-500';
     }
   };
 
@@ -84,14 +79,23 @@ export default function App() {
     }
   };
 
+  const contentAlign = currentSlide.contentAlign ?? 'center';
+  const layout = currentSlide.layout ?? 'default';
+  const maxWidthClass =
+    layout === 'two-column' || layout === 'demo' || layout === 'monetization'
+      ? 'max-w-6xl'
+      : layout === 'architecture'
+        ? 'max-w-6xl'
+        : 'max-w-4xl';
+
   return (
-    <div className="min-h-screen bg-[#0F172A] text-[#F8FAFC] font-sans selection:bg-blue-500/30 overflow-hidden flex flex-col">
+    <div className="h-screen min-h-0 bg-[#0F172A] text-[#F8FAFC] font-sans selection:bg-blue-500/30 overflow-hidden flex flex-col">
       {/* Header / Controls */}
-      <header className="p-4 flex items-center justify-between border-b border-slate-800 bg-[#0F172A]/80 backdrop-blur-md z-50">
+      <header className="shrink-0 px-2 py-2 flex items-center justify-between border-b border-slate-800 bg-[#0F172A]/80 backdrop-blur-md z-50">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white">F</div>
-            <span className="font-bold text-xl tracking-tight">Flownic</span>
+            <img src="/flownic-logo.svg" alt="Flownic logo" className="w-8 h-8 rounded-lg bg-blue-600/10 p-1" />
+            <span className="font-bold text-lg tracking-tight">Flownic</span>
           </div>
           
           <div className="h-6 w-px bg-slate-700 mx-2" />
@@ -140,8 +144,8 @@ export default function App() {
         </div>
       </header>
 
-      {/* Main Presentation Area */}
-      <main className="relative flex-1 flex flex-col items-center justify-center p-8 lg:p-16">
+      {/* Main — moderate padding; slide card fills height */}
+      <main className="relative flex-1 min-h-0 flex flex-col px-2 pb-2 pt-1 sm:px-3 sm:pb-3">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide.id}
@@ -149,132 +153,214 @@ export default function App() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="w-full max-w-6xl aspect-video bg-slate-900/50 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden flex flex-col relative"
+            className="flex-1 min-h-0 w-full max-w-[min(100%,1600px)] mx-auto bg-slate-900/50 border border-slate-800 rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col relative"
           >
-            {/* Slide Content */}
-            <div className="flex-1 p-12 lg:p-20 flex flex-col justify-center">
-              <motion.h1 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className={`text-4xl lg:text-6xl font-bold leading-tight mb-12 border-l-8 pl-8 ${getAccentClass(currentSlide.accentColor)}`}
-              >
-                {currentSlide.title}
-              </motion.h1>
+            {/* Slide Content — vertically centered block + readable type */}
+            <div
+              className={`flex-1 min-h-0 flex flex-col px-4 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6 overflow-y-auto ${
+                contentAlign === 'center' ? 'justify-center' : 'justify-start'
+              }`}
+            >
+              <div className={`mx-auto w-full ${maxWidthClass} flex flex-col gap-4 sm:gap-5`}>
+                {currentSlide.section && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="text-center"
+                  >
+                    <span className="inline-flex items-center rounded-full border border-slate-700 bg-slate-800/60 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-slate-300">
+                      {currentSlide.section}
+                    </span>
+                  </motion.div>
+                )}
 
-              {currentSlide.layout === 'two-column' ? (
-                <div className="grid grid-cols-2 gap-12">
-                  <motion.div 
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.4 }}
-                    className="space-y-6"
+                <motion.h1
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15 }}
+                  className={`text-center text-balance text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-white pb-4 border-b-4 ${getBorderAccentClass(currentSlide.accentColor)}`}
+                >
+                  {currentSlide.title}
+                </motion.h1>
+
+                {currentSlide.subtitle && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="text-center text-base sm:text-lg lg:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed"
                   >
-                    {currentSlide.leftContent?.map((item, i) => (
-                      <div key={i} className={`flex items-start gap-4 ${i === 0 ? 'text-2xl font-bold text-white mb-4' : 'text-xl text-slate-300'}`}>
-                        {i > 0 && <div className="mt-2 w-2 h-2 rounded-full bg-slate-500 shrink-0" />}
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </motion.div>
-                  <motion.div 
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 }}
-                    className="space-y-6"
+                    {currentSlide.subtitle}
+                  </motion.p>
+                )}
+
+                {currentSlide.showLogoBadge && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.22 }}
+                    className="flex justify-center"
                   >
-                    {currentSlide.rightContent?.map((item, i) => (
-                      <div key={i} className={`flex items-start gap-4 ${i === 0 ? 'text-2xl font-bold text-white mb-4' : 'text-xl text-slate-300'}`}>
-                        {i > 0 && <div className="mt-2 w-2 h-2 rounded-full bg-red-500 shrink-0" />}
-                        <span>{item}</span>
-                      </div>
-                    ))}
+                    <div className="inline-flex items-center gap-2 rounded-xl border border-blue-500/30 bg-blue-500/10 px-4 py-2">
+                      <img src="/flownic-logo.svg" alt="Flownic logo" className="w-6 h-6" />
+                      <span className="text-sm font-semibold text-blue-300">Flownic</span>
+                    </div>
                   </motion.div>
-                </div>
-              ) : currentSlide.layout === 'demo' ? (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                  <div className="space-y-8">
-                    {currentSlide.demoSteps?.map((step, i) => (
-                      <motion.div 
-                        key={i}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.4 + (i * 0.1) }}
-                        className="flex items-center gap-6 p-4 rounded-2xl bg-slate-800/50 border border-slate-700/50"
+                )}
+
+                {layout === 'architecture' ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 pt-1">
+                    {(currentSlide.architectureSteps || []).map((step, i) => (
+                      <motion.div
+                        key={step.label}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.25 + i * 0.05 }}
+                        className="rounded-xl border border-slate-700/80 bg-slate-800/40 px-4 py-3 text-center sm:text-left"
                       >
-                        <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white shrink-0">
-                          {i + 1}
+                        <div className="text-xs font-bold uppercase tracking-wide text-blue-400/95">
+                          {step.label}
                         </div>
-                        <span className="text-xl font-medium text-slate-200">{step}</span>
+                        <p className="mt-2 text-sm sm:text-base text-slate-200 leading-relaxed">{step.text}</p>
                       </motion.div>
                     ))}
                   </div>
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.6 }}
-                    className="aspect-video bg-slate-800 rounded-2xl border border-slate-700 flex flex-col items-center justify-center gap-4 group cursor-pointer hover:bg-slate-700 transition-colors"
-                  >
-                    <div className="w-20 h-20 rounded-full bg-blue-600 flex items-center justify-center text-white group-hover:scale-110 transition-transform shadow-xl">
-                      <Play size={40} fill="currentColor" />
-                    </div>
-                    <span className="text-slate-400 font-medium">Click to Play Demo Video</span>
-                  </motion.div>
-                </div>
-              ) : currentSlide.layout === 'monetization' ? (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  {currentSlide.bullets.map((bullet, i) => {
-                    const [title, desc] = bullet.split(': ');
-                    return (
-                      <motion.div 
-                        key={i}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4 + (i * 0.1) }}
-                        className="p-8 rounded-3xl bg-slate-800/40 border border-slate-700/50 flex flex-col gap-4"
-                      >
-                        <div className="w-12 h-12 rounded-2xl bg-blue-600/20 flex items-center justify-center text-blue-400">
-                          {i === 0 ? <Users size={24} /> : i === 1 ? <TrendingUp size={24} /> : <Zap size={24} />}
-                        </div>
-                        <h3 className="text-2xl font-bold text-white">{title}</h3>
-                        <p className="text-slate-400 leading-relaxed">{desc}</p>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div className="space-y-8">
-                  {currentSlide.bullets.map((bullet, i) => (
-                    <motion.div 
-                      key={i}
+                ) : layout === 'two-column' ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 pt-2">
+                    <motion.div
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.4 + (i * 0.1) }}
-                      className="flex items-start gap-6"
+                      transition={{ delay: 0.4 }}
+                      className="space-y-3 sm:space-y-4 text-left"
                     >
-                      <div className={`mt-3 w-3 h-3 rounded-full shrink-0 ${getBgAccentClass(currentSlide.accentColor)}`} />
-                      <p className="text-2xl lg:text-3xl text-slate-300 font-medium leading-relaxed">
-                        {bullet}
-                      </p>
+                      {currentSlide.leftContent?.map((item, i) => (
+                        <div
+                          key={i}
+                          className={`flex items-start gap-3 ${i === 0 ? 'text-lg sm:text-xl font-bold text-white' : 'text-base sm:text-lg text-slate-200'}`}
+                        >
+                          {i > 0 && <div className="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-slate-500" />}
+                          <span>{item}</span>
+                        </div>
+                      ))}
                     </motion.div>
-                  ))}
-                  
-                  {currentSlide.tagline && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.8 }}
-                      className="mt-12 p-8 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-2xl font-bold italic"
+                    <motion.div
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="space-y-3 sm:space-y-4 text-left"
                     >
-                      "{currentSlide.tagline}"
+                      {currentSlide.rightContent?.map((item, i) => (
+                        <div
+                          key={i}
+                          className={`flex items-start gap-3 ${i === 0 ? 'text-lg sm:text-xl font-bold text-white' : 'text-base sm:text-lg text-slate-200'}`}
+                        >
+                          {i > 0 && <div className="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-red-500" />}
+                          <span>{item}</span>
+                        </div>
+                      ))}
                     </motion.div>
-                  )}
-                </div>
-              )}
+                  </div>
+                ) : layout === 'demo' ? (
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center pt-2">
+                    <div className="space-y-3 sm:space-y-4">
+                      {currentSlide.demoSteps?.map((step, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.4 + i * 0.1 }}
+                          className="flex items-center gap-4 rounded-2xl border border-slate-700/50 bg-slate-800/50 p-3 sm:p-4"
+                        >
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white">
+                            {i + 1}
+                          </div>
+                          <span className="text-base sm:text-lg font-medium text-slate-100">{step}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.6 }}
+                      className="flex min-h-[180px] flex-col items-center justify-center gap-3 rounded-2xl border border-slate-700 bg-slate-800/80 lg:aspect-video lg:min-h-0"
+                    >
+                      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 text-white shadow-xl transition-transform group-hover:scale-110">
+                        <Play size={32} fill="currentColor" />
+                      </div>
+                      <span className="text-sm font-medium text-slate-400">Demo placeholder</span>
+                    </motion.div>
+                  </div>
+                ) : layout === 'monetization' ? (
+                  <div className="grid grid-cols-1 gap-4 pt-2 md:grid-cols-3 md:gap-5">
+                    {currentSlide.bullets.map((bullet, i) => {
+                      const [title, desc] = bullet.split(': ');
+                      return (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.4 + i * 0.1 }}
+                          className="flex flex-col gap-3 rounded-2xl border border-slate-700/50 bg-slate-800/40 p-5 sm:p-6"
+                        >
+                          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600/20 text-blue-400">
+                            {i === 0 ? <Users size={28} /> : i === 1 ? <TrendingUp size={28} /> : <Zap size={28} />}
+                          </div>
+                          <h3 className="text-lg font-bold text-white sm:text-xl">{title}</h3>
+                          <p className="text-sm leading-relaxed text-slate-400 sm:text-base">{desc}</p>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                ) : layout === 'impact' ? (
+                  <div className="grid grid-cols-1 gap-4 pt-2 md:grid-cols-3 md:gap-6">
+                    {(currentSlide.impactStats || []).map((item, i) => (
+                      <motion.div
+                        key={item.label}
+                        initial={{ opacity: 0, y: 18 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.35 + i * 0.08 }}
+                        className="rounded-2xl border border-slate-700/60 bg-slate-800/40 p-6 text-center md:text-left"
+                      >
+                        <div className="text-sm uppercase tracking-wider text-slate-400">{item.label}</div>
+                        <div className="mt-2 text-xl font-semibold text-white sm:text-2xl">{item.value}</div>
+                      </motion.div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="space-y-4 pt-1 sm:space-y-5">
+                    {currentSlide.bullets.map((bullet, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.4 + i * 0.1 }}
+                        className="flex items-start gap-4"
+                      >
+                        <div className={`mt-2 h-2.5 w-2.5 shrink-0 rounded-full ${getBgAccentClass(currentSlide.accentColor)}`} />
+                        <p className="text-left text-lg font-medium leading-relaxed text-slate-200 sm:text-xl">
+                          {bullet}
+                        </p>
+                      </motion.div>
+                    ))}
+
+                    {currentSlide.tagline && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.8 }}
+                        className="rounded-2xl border border-emerald-500/25 bg-emerald-500/10 p-4 text-center text-base font-semibold italic text-emerald-300 sm:p-5 sm:text-lg"
+                      >
+                        &ldquo;{currentSlide.tagline}&rdquo;
+                      </motion.div>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Slide Footer */}
-            <div className="p-8 border-t border-slate-800 flex justify-between items-center bg-slate-900/80">
+            <div className="shrink-0 px-3 py-2 border-t border-slate-800 flex justify-between items-center bg-slate-900/80">
               <div className="flex items-center gap-4">
                 <span className="text-slate-500 font-mono text-sm">
                   {String(slideIndex + 1).padStart(2, '0')} / {String(currentVersion.slides.length).padStart(2, '0')}
@@ -295,22 +381,22 @@ export default function App() {
         </AnimatePresence>
 
         {/* Navigation Overlays */}
-        <div className="absolute inset-y-0 left-0 w-24 flex items-center justify-center">
+        <div className="absolute inset-y-0 left-0 w-10 sm:w-12 flex items-center justify-center pointer-events-none">
           <button 
             onClick={prevSlide}
             disabled={slideIndex === 0}
-            className="p-4 text-slate-600 hover:text-white disabled:opacity-0 transition-all"
+            className="pointer-events-auto p-1 text-slate-600 hover:text-white disabled:opacity-0 transition-all"
           >
-            <ChevronLeft size={48} />
+            <ChevronLeft size={32} />
           </button>
         </div>
-        <div className="absolute inset-y-0 right-0 w-24 flex items-center justify-center">
+        <div className="absolute inset-y-0 right-0 w-10 sm:w-12 flex items-center justify-center pointer-events-none">
           <button 
             onClick={nextSlide}
             disabled={slideIndex === currentVersion.slides.length - 1}
-            className="p-4 text-slate-600 hover:text-white disabled:opacity-0 transition-all"
+            className="pointer-events-auto p-1 text-slate-600 hover:text-white disabled:opacity-0 transition-all"
           >
-            <ChevronRight size={48} />
+            <ChevronRight size={32} />
           </button>
         </div>
       </main>
