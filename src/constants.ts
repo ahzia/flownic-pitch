@@ -1,224 +1,241 @@
 import { PitchVersion } from './types';
 
+/** Single deck — you control pacing (skip last slides if short on time). */
 export const PITCH_VERSIONS: PitchVersion[] = [
   {
-    id: '5min',
-    name: '5-Minute Pitch',
-    duration: '5:00',
+    id: 'pitch',
+    name: 'Pitch',
+    duration: '',
     slides: [
       {
-        id: '5-1',
+        id: 'slide-1',
         section: 'Problem',
-        title: 'Every browser-heavy team is bleeding hours on repeat work',
-        subtitle: 'The pain is operational, daily, and expensive.',
+        title: 'Teams waste hours every day on the same browser work',
+        subtitle:
+          'People repeat the same steps again and again — copy, paste, switch tabs, fix formatting. It’s slow, boring, and full of mistakes.',
         bullets: [
-          '👩‍💼 A recruiter reviews 20+ profiles per day and repeats the same browser steps.',
-          '🔁 Data collection, tab switching, and formatting still happen manually.',
-          '📉 Result: slower execution, inconsistent quality, and avoidable human error.'
+          'Example: a recruiter searches LinkedIn, opens many profiles, copies skills and titles into a spreadsheet, asks ChatGPT to draft or shorten a message, then pastes into email or the ATS — and does it 20+ times a day.'
         ],
         accentColor: 'red',
-        speakerNotes: 'Start specific and relatable. This is not niche; this is daily operations in recruiting, sales ops, support, and research.'
+        speakerNotes:
+          'Paint the loop: LinkedIn → copy → ChatGPT → paste → ATS. Emphasize repeatability gap. Keep it concrete, not abstract.'
       },
       {
-        id: '5-2',
+        id: 'slide-2',
         section: 'Gap',
-        title: 'The stack is fragmented: chat helps text, automation tools need engineers',
+        title: 'Current tools don’t solve this',
         bullets: [],
         layout: 'two-column',
         leftContent: [
-          'What teams use now',
-          'AI chat copilots',
-          'No-code cloud automations',
-          'Manual browser workflows'
+          'What teams use today',
+          'ChatGPT and other AI chats',
+          'Automation tools (like n8n)',
+          'Spreadsheets, bookmarks, and doing it by hand'
         ],
         rightContent: [
-          'What still breaks',
-          '❌ Not browser-context repeatable',
-          '❌ Hard for non-technical users',
-          '❌ Cloud/privacy concerns for sensitive workflows'
+          'Why it still breaks',
+          '❌ Chat helps with words, not a full, repeatable browser routine',
+          '❌ Many automations are too technical or live in the cloud — data and cost concerns, not every website has API',
+          '❌ Nothing ties Browser + AI + your exact clicks and tabs into one workflow you can run again'
         ],
         accentColor: 'orange',
-        speakerNotes: 'Teams need something like ChatGPT + n8n, but directly where work happens: inside the browser.'
+        speakerNotes:
+          'Bridge: they need ChatGPT-style help and n8n-style flows, but inside the browser, for non-developers.'
       },
       {
-        id: '5-3',
+        id: 'slide-3',
         section: 'Solution',
-        title: 'Flownic = AI workflow layer for browser operations',
-        subtitle: 'Workflow-first automation for business teams, not only developers.',
+        title: 'Flownic turns browser work into reusable workflows',
+        subtitle:
+          'We help teams turn repetitive browser work into workflows they can run in one click.',
         showLogoBadge: true,
         bullets: [
-          '🧩 Workflow-first: save reusable playbooks, not one-off prompts.',
-          '🤖 AI + action: combine task AI, browser tools, and agentic steps.',
-          '🔒 On-device first: use Chrome built-in AI where possible.',
-          '🏢 B2B outcome: faster execution, lower variance, easier onboarding.'
+          'Record or define a workflow once.',
+          'Run it anytime with one shortcut.',
+          'AI handles the thinking; the browser handles the actions.',
+          'Chrome built-in AI when you want it: no cloud and no internet required for that path — your data stays on your computer.'
         ],
-        tagline: 'ChatGPT (with on-device option) + n8n-style flows, built for non-technical browser users.',
+        tagline:
+          'Like ChatGPT and workflow automation combined — but it runs in your browser, on your sites, as a playbook you can repeat.',
         accentColor: 'emerald',
-        speakerNotes: 'Mention real shipped capabilities from codebase: workflow engine + data points, browser tools + agent step, multi-tab primitives.'
+        speakerNotes:
+          'One sentence: reusable playbooks, not one-off prompts. On-device Chrome AI = privacy-sensitive teams. Details on architecture slide if needed.'
       },
       {
-        id: '5-4',
-        section: 'Why Now',
-        title: 'Why now, and why Flownic',
-        bullets: [
-          '⚡ AI is now good enough to plan and execute browser sub-tasks.',
-          '🛟 Teams still need deterministic workflows and human checkpoints.',
-          '✅ We already shipped a working extension with real workflow execution and demos.'
+        id: 'slide-4',
+        section: 'Demo',
+        title: 'From manual loop to one-click workflow',
+        bullets: [],
+        layout: 'demo',
+        demoSteps: [
+          'Pick or build a workflow',
+          'Run it on the live page',
+          'Get structured output you can reuse',
+          'Run again tomorrow in one click'
         ],
         accentColor: 'blue',
-        speakerNotes: 'Position this as execution-heavy, not theory-heavy. Built: multi-step runs, browser actions, agent tooling, reusable templates.'
+        speakerNotes:
+          '0:00–0:25: show UI. 0:25–1:15: live page. 1:15–1:45: output. 1:45–2:00: repeatability line. Keep fallback video ready.'
       },
       {
-        id: '5-4b',
+        id: 'slide-5',
+        section: 'Business',
+        title: 'How we make money',
+        bullets: [
+          'B2B — per user: Companies pay per seat for their teams on the product.',
+          'B2B — usage: Pay for AI and browser actions as volume grows.',
+          'Marketplace (B2C): Ready-made workflow packs people can buy; creators earn when their workflows sell.'
+        ],
+        accentColor: 'emerald',
+        layout: 'monetization',
+        speakerNotes:
+          'Core: recurring B2B + usage. Marketplace expands distribution and creator economy. Optional: enterprise add-ons later.'
+      },
+      {
+        id: 'slide-6',
+        section: 'Use cases',
+        title: 'What Flownic can do for people and teams',
+        subtitle:
+          'A vision of repeatable browser playbooks',
+        bullets: [],
+        layout: 'useCases',
+        contentAlign: 'start',
+        accentColor: 'emerald',
+        useCases: [
+          {
+            icon: 'FileText',
+            title: 'Smarter job applications',
+            description:
+              'Read each job post, adapt your CV and cover letter to the role and company, fill application forms, and track status — one workflow per search, tuned per listing.'
+          },
+          {
+            icon: 'UserSearch',
+            title: 'Recruiting & sourcing',
+            description:
+              'Search LinkedIn or job boards, shortlist profiles, enrich with public data, draft personalized outreach, and log everything to your ATS without tab gymnastics.'
+          },
+          {
+            icon: 'Target',
+            title: 'Sales & outbound',
+            description:
+              'Move from prospect to CRM: research a lead on the web, update the record, generate a tailored email or sequence, and follow up when it’s time.'
+          },
+          {
+            icon: 'Headphones',
+            title: 'Support & success',
+            description:
+              'Open a ticket, pull order and account context from internal tools, suggest a reply, run safe actions (refund, escalate), and document the case.'
+          },
+          {
+            icon: 'ShoppingCart',
+            title: 'E‑commerce & ops',
+            description:
+              'Check competitors’ prices, update your storefront or marketplace listings, reconcile supplier portals, and handle routine storefront tasks in the browser.'
+          },
+          {
+            icon: 'LineChart',
+            title: 'Research & analysis',
+            description:
+              'Harvest public data from many pages into a structured sheet or brief, refresh dashboards, and rerun the same sweep when numbers change.'
+          },
+          {
+            icon: 'Globe',
+            title: 'Personal life admin',
+            description:
+              'Renew insurance, book travel, compare utilities, or chase refunds — multi-step sites that today eat your evening, turned into guided runs.'
+          },
+          {
+            icon: 'Receipt',
+            title: 'Finance & bookkeeping',
+            description:
+              'Download statements, categorize expenses across bank and card portals, and prep exports for your accountant or tax tool.'
+          },
+          {
+            icon: 'GraduationCap',
+            title: 'Students & applicants',
+            description:
+              'Apply to programs and scholarships: gather requirements, adapt essays, upload documents, and track deadlines across different portals.'
+          },
+          {
+            icon: 'Plane',
+            title: 'Travel & bookings',
+            description:
+              'Compare flights and hotels across sites, hold the best fare rules in mind, and complete bookings with your saved preferences.'
+          },
+          {
+            icon: 'ClipboardList',
+            title: 'Compliance & internal ops',
+            description:
+              'Walk through policy checklists, attestations, and vendor portals — same audit trail every quarter, with human approval where required.'
+          },
+          {
+            icon: 'Sparkles',
+            title: 'Creators & side projects',
+            description:
+              'Post once, adapt for each platform, resize copy, and file repetitive creator workflows (uploads, metadata, comments) without losing your voice.'
+          }
+        ],
+        speakerNotes:
+          'Paint breadth: browser-native, role-agnostic. Tie back to “define once, run forever.” Pick 2–3 examples live if short on time.'
+      },
+      {
+        id: 'slide-7',
+        section: 'Why now',
+        title: 'Why now — and what companies care about',
+        bullets: [],
+        layout: 'two-column',
+        contentAlign: 'start',
+        leftContent: [
+          'Why now',
+          'AI can finally understand and execute real tasks.',
+          'Teams still need structure, approvals, and control — not a black box.',
+          'No one has combined both inside the browser the way daily operators need.'
+        ],
+        rightContent: [
+          'What companies care about',
+          'Simplicity: easy for everyday users, not only engineers.',
+          'Control: approve and review actions before they run.',
+          'Trust: see what the AI did and what data was involved.'
+        ],
+        accentColor: 'blue',
+        speakerNotes:
+          'Left: timing + wedge. Right: buyer checklist — maps to product story. Browser-first / on-device called out on solution slide.'
+      },
+      {
+        id: 'slide-8',
         section: 'Architecture',
         title: 'How it works under the hood',
-        subtitle: 'Extension UI → workflow JSON → background orchestration → page execution.',
+        subtitle:
+          'MVP today: Chrome extension, workflow engine, and demos you can run — technical detail stays on this slide.',
         bullets: [],
         layout: 'architecture',
+        contentAlign: 'start',
         architectureSteps: [
           {
-            label: '1. Extension',
-            text: 'Playground / Quickbar — author and trigger workflows in Chrome.'
+            label: '1. Chrome extension (shipped)',
+            text: 'Playground and quick actions — where teams author and trigger workflows. This is our live MVP surface.'
           },
           {
-            label: '2. Workflow JSON',
-            text: 'Steps (tasks, handlers, agents, browser tools) + ${data points} + triggers.'
+            label: '2. Workflow file',
+            text: 'A JSON “recipe” of steps, data, and triggers — portable and versionable.'
           },
           {
-            label: '3. Service worker',
-            text: 'Runs the workflow: resolve tokens, route steps, message the right tab.'
+            label: '3. Background service',
+            text: 'Orchestrates the run: which step is next, which tab to use, and messages to the page.'
           },
           {
-            label: '4. Content script',
-            text: 'Context (page + KB), TaskExecutor, HandlerExecutor, BrowserController tools.'
+            label: '4. Page layer',
+            text: 'Runs in the tab: reads the page, runs actions, and connects to browser tooling.'
           },
           {
-            label: '5. Browser MCP agent',
-            text: 'LLM loop + tool calls (navigate, click, snapshot, …) when a step needs reasoning.'
+            label: '5. AI + browser agent',
+            text: 'When a step needs reasoning, an LLM loop uses tools (navigate, click, snapshot, …) to complete the task.'
           }
         ],
         accentColor: 'blue',
-        speakerNotes: 'Ground truth: orchestration lives in the background service worker; DOM and BrowserController run in the content script per tab. Agents combine tasks (Chrome AI / remote LLM) with browser tools.'
-      },
-      {
-        id: '5-5',
-        section: 'Demo',
-        title: '2-minute demo: from repetitive browser task to reusable workflow',
-        bullets: [],
-        layout: 'demo',
-        demoSteps: [
-          '🚀 Trigger workflow',
-          '🧠 Agent/tool gathers data',
-          '📦 Structured output + download/modal',
-          '♻️ Rerun in one shortcut'
-        ],
-        accentColor: 'blue',
-        speakerNotes: '0:00-0:20: playground. 0:20-1:10: live page. 1:10-1:40: business output. 1:40-2:00: rerun/repeatability. Safety tip: fallback recording ready.'
-      },
-      {
-        id: '5-6',
-        section: 'Business Model',
-        title: 'Revenue strategy: B2B core + B2C marketplace edge',
-        bullets: [
-          'B2B: seat-based SaaS + usage credits + enterprise controls (SSO, audit, governance).',
-          'B2C: users buy ready-made workflow packs for specific outcomes.',
-          'Creator economy: workflow builders publish and earn revenue share.'
-        ],
-        accentColor: 'blue',
-        layout: 'monetization',
-        speakerNotes: 'B2B is the core revenue engine. Marketplace accelerates adoption and creates creator-led distribution.'
-      },
-      {
-        id: '5-7',
-        section: 'Missing Piece',
-        title: 'What matters most next: trust, governance, and ROI proof',
-        subtitle: 'This is the critical bridge from great product to scalable B2B adoption.',
-        bullets: [
-          '🛡️ Trust layer: action previews, approvals, and auditable run logs for teams.',
-          '📊 ROI proof: benchmark time saved and quality consistency per workflow.',
-          '🔒 Governance: role-based workflow access and approved template libraries.'
-        ],
-        accentColor: 'emerald',
-        speakerNotes: 'This is the most important missing piece in many automation products. Buyers need control and measurable ROI, not only capability.'
+        speakerNotes:
+          'For technical listeners: service worker vs content script, BrowserController-style tools, optional on-device vs remote LLM. For others: “extension coordinates AI and the browser in one workflow.”'
       }
-    ]
-  },
-  {
-    id: '3min',
-    name: '3-Minute Pitch',
-    duration: '3:00',
-    slides: [
-      {
-        id: '3-1',
-        section: 'Problem',
-        title: 'Teams lose hours every week on repeat browser workflows',
-        bullets: [
-          '👥 Recruiting, sales ops, support, research: same browser tasks every day.',
-          '🧱 Copy-paste + tab switching + manual formatting = slow and error-prone.',
-          '💬 Chat tools help text, not repeatable operations.'
-        ],
-        accentColor: 'red',
-        speakerNotes: 'Keep this very human and direct. One concrete role example only (recruiter or sales ops).'
-      },
-      {
-        id: '3-2',
-        section: 'Architecture',
-        title: 'How it works (high level)',
-        subtitle: 'Same stack as the product: workflow engine + BrowserController + agent loop.',
-        bullets: [],
-        layout: 'architecture',
-        architectureSteps: [
-          { label: 'Extension', text: 'UI to build and run workflows.' },
-          { label: 'Workflow JSON', text: 'Portable recipe: steps + tokens + triggers.' },
-          { label: 'Background', text: 'Orchestrates runs and tab messaging.' },
-          { label: 'Content + BC', text: 'Page context, handlers, browser tools.' },
-          { label: 'MCP-style agent', text: 'LLM + tools for adaptive steps.' }
-        ],
-        accentColor: 'blue',
-        speakerNotes: 'One sentence each if short on time. Emphasize: not a cloud-only bot — runs in the user’s browser profile with explicit steps.'
-      },
-      {
-        id: '3-3',
-        section: 'Solution + Monetization',
-        title: 'Flownic makes browser work reusable, AI-powered, and operational',
-        showLogoBadge: true,
-        bullets: [
-          '✨ Build workflow once, run in one shortcut.',
-          '🛠️ Combine AI tasks + browser actions + agent step when needed.',
-          '💰 Revenue: B2B seat+usage pricing, plus B2C workflow marketplace with creator payouts.'
-        ],
-        tagline: 'Think: ChatGPT + n8n-style flows, built for non-technical browser users.',
-        accentColor: 'emerald',
-        speakerNotes: 'Mention on-device-first option: "We prioritize Chrome built-in AI where possible." Include one monetization line: "B2B SaaS first + workflow marketplace."'
-      },
-      {
-        id: '3-4',
-        section: 'Demo',
-        title: 'Live: from manual browser process to repeatable workflow',
-        bullets: [],
-        layout: 'demo',
-        demoSteps: [
-          'Trigger',
-          'Execute',
-          'Output',
-          'Reuse'
-        ],
-        accentColor: 'blue',
-        speakerNotes: '0:00-0:20: intent. 0:20-1:20: execute. 1:20-1:50: output artifact. 1:50-2:00: final line: "This is one reusable operational playbook, not a one-off prompt."'
-      },
-      {
-        id: '3-5',
-        section: 'Close',
-        title: 'What’s next',
-        subtitle: 'Working product today. Clear business model. Ready for pilots.',
-        bullets: [
-          'B2B is our core: recurring SaaS with expansion economics.',
-          'B2C marketplace expands reach: buy-ready workflows, creator revenue share.',
-          'We are now focused on proving pilot ROI and scaling distribution.'
-        ],
-        accentColor: 'blue',
-        speakerNotes: 'Use as a 15-20 second close if time allows; otherwise keep this as backup and finish on demo outcome.'
-      },
     ]
   }
 ];

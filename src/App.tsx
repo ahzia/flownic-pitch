@@ -1,34 +1,60 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  ChevronLeft, 
-  ChevronRight, 
-  Play, 
-  Clock, 
-  MessageSquare, 
-  Maximize2, 
+import {
+  ChevronLeft,
+  ChevronRight,
+  Play,
+  MessageSquare,
+  Maximize2,
   Minimize2,
   TrendingUp,
   Users,
-  Zap
+  Zap,
+  FileText,
+  UserSearch,
+  Target,
+  Headphones,
+  ShoppingCart,
+  LineChart,
+  Globe,
+  Receipt,
+  GraduationCap,
+  Plane,
+  ClipboardList,
+  Sparkles,
+  type LucideIcon
 } from 'lucide-react';
 import { PITCH_VERSIONS } from './constants';
 import { Slide } from './types';
 
+const USE_CASE_ICONS: Record<string, LucideIcon> = {
+  FileText,
+  UserSearch,
+  Target,
+  Headphones,
+  ShoppingCart,
+  LineChart,
+  Globe,
+  Receipt,
+  GraduationCap,
+  Plane,
+  ClipboardList,
+  Sparkles
+};
+
 export default function App() {
-  const [versionIndex, setVersionIndex] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
   const [showNotes, setShowNotes] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const currentVersion = PITCH_VERSIONS[versionIndex];
-  const currentSlide = currentVersion.slides[slideIndex];
+  const slides = PITCH_VERSIONS[0].slides;
+  const currentSlide = slides[slideIndex];
 
   const nextSlide = useCallback(() => {
-    if (slideIndex < currentVersion.slides.length - 1) {
+    if (slideIndex < slides.length - 1) {
       setSlideIndex(prev => prev + 1);
     }
-  }, [slideIndex, currentVersion.slides.length]);
+  }, [slideIndex, slides.length]);
 
   const prevSlide = useCallback(() => {
     if (slideIndex > 0) {
@@ -82,7 +108,7 @@ export default function App() {
   const contentAlign = currentSlide.contentAlign ?? 'center';
   const layout = currentSlide.layout ?? 'default';
   const maxWidthClass =
-    layout === 'two-column' || layout === 'demo' || layout === 'monetization'
+    layout === 'two-column' || layout === 'demo' || layout === 'monetization' || layout === 'useCases'
       ? 'max-w-6xl'
       : layout === 'architecture'
         ? 'max-w-6xl'
@@ -92,39 +118,14 @@ export default function App() {
     <div className="h-screen min-h-0 bg-[#0F172A] text-[#F8FAFC] font-sans selection:bg-blue-500/30 overflow-hidden flex flex-col">
       {/* Header / Controls */}
       <header className="shrink-0 px-2 py-2 flex items-center justify-between border-b border-slate-800 bg-[#0F172A]/80 backdrop-blur-md z-50">
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
             <img src="/flownic-logo.svg" alt="Flownic logo" className="w-8 h-8 rounded-lg bg-blue-600/10 p-1" />
-            <span className="font-bold text-lg tracking-tight">Flownic</span>
-          </div>
-          
-          <div className="h-6 w-px bg-slate-700 mx-2" />
-          
-          <div className="flex bg-slate-800/50 p-1 rounded-lg">
-            {PITCH_VERSIONS.map((v, idx) => (
-              <button
-                key={v.id}
-                onClick={() => {
-                  setVersionIndex(idx);
-                  setSlideIndex(0);
-                }}
-                className={`px-3 py-1 rounded-md text-sm font-medium transition-all ${
-                  versionIndex === idx 
-                    ? 'bg-blue-600 text-white shadow-lg' 
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                {v.name}
-              </button>
-            ))}
+            <span className="font-bold text-lg tracking-tight">Flownic.ai</span>
           </div>
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 text-slate-400 text-sm font-medium bg-slate-800/30 px-3 py-1.5 rounded-full">
-            <Clock size={14} />
-            <span>{currentVersion.duration}</span>
-          </div>
           
           <button 
             onClick={() => setShowNotes(!showNotes)}
@@ -202,14 +203,39 @@ export default function App() {
                     transition={{ delay: 0.22 }}
                     className="flex justify-center"
                   >
-                    <div className="inline-flex items-center gap-2 rounded-xl border border-blue-500/30 bg-blue-500/10 px-4 py-2">
-                      <img src="/flownic-logo.svg" alt="Flownic logo" className="w-6 h-6" />
-                      <span className="text-sm font-semibold text-blue-300">Flownic</span>
+                    <div className="inline-flex items-center gap-3 rounded-2xl border border-blue-500/30 bg-blue-500/10 px-5 py-2.5">
+                      <img src="/flownic-logo.svg" alt="Flownic logo" className="h-9 w-9 sm:h-10 sm:w-10" />
+                      <span className="text-base font-semibold tracking-tight text-blue-300 sm:text-lg">
+                        Flownic.ai
+                      </span>
                     </div>
                   </motion.div>
                 )}
 
-                {layout === 'architecture' ? (
+                {layout === 'useCases' ? (
+                  <div className="grid grid-cols-1 gap-3 pt-1 sm:grid-cols-2 lg:grid-cols-3 lg:gap-3.5">
+                    {(currentSlide.useCases || []).map((uc, i) => {
+                      const Icon = USE_CASE_ICONS[uc.icon];
+                      return (
+                        <motion.div
+                          key={uc.title}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.2 + i * 0.04 }}
+                          className="flex gap-3 rounded-xl border border-slate-700/70 bg-slate-800/35 p-3 text-left sm:p-3.5"
+                        >
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-600/20 text-blue-400">
+                            {Icon ? <Icon className="h-5 w-5" strokeWidth={1.75} /> : null}
+                          </div>
+                          <div className="min-w-0">
+                            <h3 className="text-sm font-bold leading-snug text-white sm:text-base">{uc.title}</h3>
+                            <p className="mt-1 text-xs leading-relaxed text-slate-400 sm:text-sm">{uc.description}</p>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                ) : layout === 'architecture' ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 pt-1">
                     {(currentSlide.architectureSteps || []).map((step, i) => (
                       <motion.div
@@ -363,18 +389,18 @@ export default function App() {
             <div className="shrink-0 px-3 py-2 border-t border-slate-800 flex justify-between items-center bg-slate-900/80">
               <div className="flex items-center gap-4">
                 <span className="text-slate-500 font-mono text-sm">
-                  {String(slideIndex + 1).padStart(2, '0')} / {String(currentVersion.slides.length).padStart(2, '0')}
+                  {String(slideIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
                 </span>
                 <div className="w-48 h-1.5 bg-slate-800 rounded-full overflow-hidden">
                   <motion.div 
                     initial={{ width: 0 }}
-                    animate={{ width: `${((slideIndex + 1) / currentVersion.slides.length) * 100}%` }}
+                    animate={{ width: `${((slideIndex + 1) / slides.length) * 100}%` }}
                     className="h-full bg-blue-600"
                   />
                 </div>
               </div>
               <div className="text-slate-500 text-sm font-medium uppercase tracking-widest">
-                Flownic Pitch • {currentVersion.name}
+                Flownic.ai
               </div>
             </div>
           </motion.div>
@@ -393,7 +419,7 @@ export default function App() {
         <div className="absolute inset-y-0 right-0 w-10 sm:w-12 flex items-center justify-center pointer-events-none">
           <button 
             onClick={nextSlide}
-            disabled={slideIndex === currentVersion.slides.length - 1}
+            disabled={slideIndex === slides.length - 1}
             className="pointer-events-auto p-1 text-slate-600 hover:text-white disabled:opacity-0 transition-all"
           >
             <ChevronRight size={32} />
