@@ -12,6 +12,8 @@ export interface Slide {
   leftContent?: string[];
   rightContent?: string[];
   demoSteps?: string[];
+  /** Served from `public/` (e.g. `/flownic-aistart.mp4`). When set with no `demoSteps`, slide is video-only. */
+  demoVideoSrc?: string;
   impactStats?: Array<{ label: string; value: string }>;
   /** Compact pipeline for architecture slide */
   architectureSteps?: Array<{ label: string; text: string }>;

@@ -63,16 +63,10 @@ export const PITCH_VERSIONS: PitchVersion[] = [
       },
       {
         id: 'slide-4',
-        section: 'Demo',
-        title: 'From manual loop to one-click workflow',
+        title: 'Demo',
         bullets: [],
         layout: 'demo',
-        demoSteps: [
-          'Pick or build a workflow',
-          'Run it on the live page',
-          'Get structured output you can reuse',
-          'Run again tomorrow in one click'
-        ],
+        demoVideoSrc: '/flownic-aistart.mp4',
         accentColor: 'blue',
         speakerNotes:
           '0:00–0:25: show UI. 0:25–1:15: live page. 1:15–1:45: output. 1:45–2:00: repeatability line. Keep fallback video ready.'
@@ -94,7 +88,7 @@ export const PITCH_VERSIONS: PitchVersion[] = [
       {
         id: 'slide-6',
         section: 'Use cases',
-        title: 'What Flownic can do for people and teams',
+        title: 'What Flownic can do for people and teams (1/2)',
         subtitle:
           'A vision of repeatable browser playbooks',
         bullets: [],
@@ -137,7 +131,22 @@ export const PITCH_VERSIONS: PitchVersion[] = [
             title: 'Research & analysis',
             description:
               'Harvest public data from many pages into a structured sheet or brief, refresh dashboards, and rerun the same sweep when numbers change.'
-          },
+          }
+        ],
+        speakerNotes:
+          'Use cases page 1: HR, sales, support, e-commerce, and research examples.'
+      },
+      {
+        id: 'slide-7',
+        section: 'Use cases',
+        title: 'What Flownic can do for people and teams (2/2)',
+        subtitle:
+          'More everyday and high-frequency browser workflows',
+        bullets: [],
+        layout: 'useCases',
+        contentAlign: 'start',
+        accentColor: 'emerald',
+        useCases: [
           {
             icon: 'Globe',
             title: 'Personal life admin',
@@ -176,10 +185,10 @@ export const PITCH_VERSIONS: PitchVersion[] = [
           }
         ],
         speakerNotes:
-          'Paint breadth: browser-native, role-agnostic. Tie back to “define once, run forever.” Pick 2–3 examples live if short on time.'
+          'Use cases page 2: personal ops, finance, student flows, travel, compliance, creator workflows.'
       },
       {
-        id: 'slide-7',
+        id: 'slide-8',
         section: 'Why now',
         title: 'Why now — and what companies care about',
         bullets: [],
@@ -195,14 +204,15 @@ export const PITCH_VERSIONS: PitchVersion[] = [
           'What companies care about',
           'Simplicity: easy for everyday users, not only engineers.',
           'Control: approve and review actions before they run.',
-          'Trust: see what the AI did and what data was involved.'
+          'Trust: see what the AI did and what data was involved.',
+          'Offline-first option: run core workflows without relying on cloud or internet when possible.'
         ],
         accentColor: 'blue',
         speakerNotes:
           'Left: timing + wedge. Right: buyer checklist — maps to product story. Browser-first / on-device called out on solution slide.'
       },
       {
-        id: 'slide-8',
+        id: 'slide-9',
         section: 'Architecture',
         title: 'How it works under the hood',
         subtitle:

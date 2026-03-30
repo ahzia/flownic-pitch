@@ -1,1 +1,57 @@
 @import "tailwindcss";
+
+/* Screen: deck for PDF/print is not shown */
+@media screen {
+  .print-deck {
+    display: none;
+  }
+}
+
+/* Print / Save as PDF: hide app chrome, one slide per page */
+@media print {
+  /* Force Chrome/Safari to keep background colors & full styling in PDF */
+  html,
+  body {
+    background: #0f172a !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-deck {
+    display: block !important;
+    background: #0f172a !important;
+  }
+
+  .print-slide-sheet {
+    /* One slide per printed page (16:9 landscape). */
+    width: 11in;
+    height: 6.1875in;
+    background: #0f172a !important;
+    page-break-after: always;
+    page-break-inside: avoid;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .print-slide-sheet:last-child {
+    page-break-after: auto;
+  }
+
+  @page {
+    /* Remove extra white margins; slide card fills the page. */
+    margin: 0;
+    size: 11in 6.1875in;
+  }
+}
+
