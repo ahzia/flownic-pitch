@@ -213,6 +213,35 @@ export const PITCH_VERSIONS: PitchVersion[] = [
       },
       {
         id: 'slide-9',
+        section: 'Comparison',
+        title: 'Flownic vs the alternatives',
+        bullets: [],
+        layout: 'two-column',
+        contentAlign: 'start',
+        leftContent: [
+          'What people use today',
+          'Manual: ChatGPT + copy/paste between tabs',
+          'Automation: n8n/Zapier-style flows (cloud + brittle)',
+          'Browser automation: browser-use / Playwright-style agent control (engineering heavy)',
+          'Browser agents: NanoBrowser / Operator-style goal-to-actions',
+          'AI sidebars: Microsoft Copilot (draft + summarize on the page)',
+          'OpenAI browser experiences: "chat -> do stuff" (agentic runs)'
+        ],
+        rightContent: [
+          "What's unique about Flownic",
+          'Workflow-first artifacts: saved, shareable browser playbooks',
+          'Page-aware execution: selection/context -> actions on the real site',
+          'Privacy-friendly AI: Chrome built-in + explicit opt-in for external models',
+          'Inspectable outputs: tokens + step graph you can verify',
+          "Deterministic steps + agent mode when steps aren't enough",
+          'B2B governance: approvals, audit trail, and repeatability'
+        ],
+        accentColor: 'blue',
+        speakerNotes:
+          'Position this as user outcomes first: repeatable workflows, trusted outputs, and enterprise-ready governance across browser work.'
+      },
+      {
+        id: 'slide-10',
         section: 'Architecture',
         title: 'How it works under the hood',
         subtitle:
